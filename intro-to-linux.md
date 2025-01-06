@@ -75,7 +75,7 @@ Credit: https://www.youtube.com/watch?v=jYUZAF3ePFE
   4. **Default Software**: Varies between distros (e.g., desktop environments like GNOME or KDE).
   5. **Customization**: Some distros include unique configurations or optimizations for specific tasks.
 
-![the-stories-behind-debian-red-hat-and-arch-names](./intro-to-linux.assets/the-stories-behind-debian-red-hat-and-arch-names.webp)
+![the-stories-behind-debian-red-hat-and-arch-names](./intro-to-linux.assets/the-stories-behind-debian-red-hat-and-arch-names.jpg)
 Credit: https://www.reddit.com/r/DistroHopping/comments/1hubt22/the_stories_behind_debian_red_hat_and_arch_names/
 
 ### Popular Distros:
@@ -117,13 +117,6 @@ The open-source nature of Linux allows anyone to modify and distribute their own
 - **Kernel**: The engine, driving the whole thing.
 - **Tools & Utilities**: The steering wheel, pedals, and dashboard.
 - **Customizations**: Paint job, seat covers, and radio. Each distro has its own vibe!
-
-### Why Choose a Specific Distro?
-
-- **Ease of Use**: Ubuntu for beginners, Arch Linux for enthusiasts.
-- **Purpose**: Servers (RHEL), desktops (Mint), or security (Kali).
-- **Performance**: Lightweight distros for older hardware.
-- **Community Support**: Popular distros have larger communities and resources.
 
 ### Linux Subreddits
 
@@ -393,32 +386,58 @@ hong:x:1000:1000:Hong Yan:/home/hong:/usr/bin/zsh
 breakglass:x:1001:1001::/home/breakglass:/bin/bash
 ```
 
+`bat` is a modern version of `cat` with syntax highlighting, Git integration, and more: https://www.redhat.com/en/blog/linux-bat-command
+
+### `tail` and `head`
+
+- The `tail` and `head` commands print the output of the last and first ten lines of a file, respectively.
+- You can configure the number of lines displayed for both the commands with option `-n`.
+
+```
+# head without command line arguments displays first 10 lines of /etc/passwd file
+[hong@rhel9 ~]$ head /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+
+# Display first 3 lines of /etc/passwd file
+[hong@rhel9 ~]$ head -3 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+
+# Display last 10 lines of /var/log/secure file
+[hong@rhel9 ~]$ sudo tail /var/log/secure
+Jan  5 20:19:10 rhel9 sshd[35176]: pam_unix(sshd:session): session opened for user hong(uid=1000) by hong(uid=0)
+Jan  5 20:19:10 rhel9 sshd[35179]: Received disconnect from 10.0.0.1 port 53200:11: disconnected by user
+Jan  5 20:19:10 rhel9 sshd[35179]: Disconnected from user hong 10.0.0.1 port 53200
+Jan  5 20:19:10 rhel9 sshd[35176]: pam_unix(sshd:session): session closed for user hong
+Jan  5 20:33:45 rhel9 sudo[35221]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat secure
+Jan  5 20:33:45 rhel9 sudo[35221]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
+Jan  5 20:33:45 rhel9 sudo[35221]: pam_unix(sudo:session): session closed for user root
+Jan  5 20:33:50 rhel9 sudo[35224]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/tail secure
+Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
+Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session closed for user root
+```
+
+### `more` and `less`
+
+- The more command is used to display larger files, one screen at a time. You can advance one line at a time by pressing the `Enter` key, or one screen at a time by pressing the `space` bar. (Use `q` to quit)
+- The less command gives much the same output as the more command does but adds the ability to scroll forwards (`d` for down) and back (`u` for up) through the text. (Use `q` to quit)
+- [When `less` is better than `more`](https://www.redhat.com/en/blog/when-more-less-because-one-tool-never-enough)
+  - allows forward and reverse scrolling,
+  - allows forward and reverse searching,
+  - immediately skips to the end or beginning of the file or output,
+  - allows faster access by not loading the entire file into memory at one time.
 
 
-1. **Getting Help:**
-   - `--help`: Quick command-specific options and usage.
-   - `man <command>`: Manual pages with detailed documentation.
-
-2. **System Information:**
-   - `whoami`: Displays the current logged-in user.
-   - `date`: Prints current system date and time.
-
-3. **File Management:**
-   - `touch <filename>`: Creates an empty file.
-   - `mkdir <directory>`: Creates a directory.
-   - `cp <source> <destination>`: Copies files or directories.
-   - `mv <source> <destination>`: Moves or renames files.
-   - `rm <file>`: Deletes a file.
-   - `rmdir <directory>`: Deletes an empty directory.
-
-4. **Viewing Content:**
-   - `cat <file>`: Displays file contents.
-   - `head <file>`: Displays the first 10 lines of a file.
-   - `tail <file>`: Displays the last 10 lines of a file.
-
-5. **User Privileges:**
-   - `sudo <command>`: Executes commands as a superuser.
-   - `/etc/sudoers`: Configuration file for sudo permissions.
 
 ---
 
