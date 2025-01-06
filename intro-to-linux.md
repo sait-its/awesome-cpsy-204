@@ -660,7 +660,7 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 [hong@rhel9 home]$ pwd
 /home
 
-# `cd` without options takes you back to your home too
+# `cd` without options takes you back to your home
 [hong@rhel9 home]$ cd
 [hong@rhel9 ~]$ pwd
 /home/hong
@@ -668,7 +668,7 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 # Use absolute path
 [hong@rhel9 ~]$ cd /home
 
-# The cd command can be used to return the user to the
+# The `cd /` command can be used to return the user to the
 # root directory of the file system by using the forward-slash.
 [hong@rhel9 home]$ cd /
 [hong@rhel9 /]$ pwd
@@ -689,7 +689,385 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 
 
 
+## File Management
 
+### Linux File Types
+
+- The file extension (`.txt`) is not necessarily the file type. Linux has 7 basic file types, but we typically only see 3.
+- Of the seven (regular, directory, symbolic link, FIFO special, block special, character special, and socket) we generally only see regular, directory, and special.
+- We can see the file type as the first character before permissions in a long listing.
+
+![file-types](./intro-to-linux.assets/file-types.webp) 
+
+### Touch
+
+- The common use for `touch` is to create an empty file as a placeholder.
+- Use `touch` to update the last accessed timestamp.
+
+```
+[hong@rhel9 ~]$ ls -l
+total 144
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+# Use `touch` to create an empty file `hello.txt`
+[hong@rhel9 ~]$ touch hello.txt
+[hong@rhel9 ~]$ ls -l
+total 144
+-rw-r--r--. 1 hong hong      0 Jan  5 21:33 hello.txt   <- Note the time is 21:33
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Two minutes later, use `touch` command against the same
+# `hello.txt` file to update the last accessed timestamp.
+[hong@rhel9 ~]$ touch hello.txt
+[hong@rhel9 ~]$ ls -l
+total 144
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt   <- Note the time is 21:35
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+```
+
+### Make Directory
+
+- The `mkdir` command is used to create a new directory in your current directory.
+- It can also be used with an absolute path to create a new directory inside a different directory.
+- To create a directory with a directory inside of it, use the `-p` option.
+- You can run a single `mkdir dir1 dir2` command and list the directory names separated by a space.
+- You can also use `mkdir` with curly brackets `{}` to create multiple directories. 
+- You can even create a batch of directories starting with the same pattern. Prepend the curly brackets with the pattern and use the brackets to specify the number of directories.
+
+```
+[hong@rhel9 ~]$ mkdir cpsy204
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 2 hong hong      6 Jan  5 21:38 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Make multiple directories
+[hong@rhel9 ~]$ mkdir cpsy204/lab1 cpsy204/lab2
+[hong@rhel9 ~]$ ls -l cpsy204
+total 0
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
+
+[hong@rhel9 ~]$ cd cpsy204/
+[hong@rhel9 cpsy204]$ ls -l
+total 0
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
+
+# Use `mkdir` with curly brackets `{}` to create multiple directories. 
+[hong@rhel9 cpsy204]$ mkdir lab{3..5}
+[hong@rhel9 cpsy204]$ ls -l
+total 0
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:40 lab3
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:40 lab4
+drwxr-xr-x. 2 hong hong 6 Jan  5 21:40 lab5
+
+# To create a directory with a directory inside of it,
+# use the `-p` option.
+[hong@rhel9 cpsy204]$ mkdir -p lab6/components/part1
+[hong@rhel9 cpsy204]$ tree .
+.
+├── lab1
+├── lab2
+├── lab3
+├── lab4
+├── lab5
+└── lab6
+    └── components
+        └── part1
+```
+
+### Copy – File or Directory
+
+- The `cp` command copies both files and directories.
+- This command has many options, but the basic syntax is simple.
+- Run `cp {source} {destination}` to copy from one place (source) to another (destination).
+- To copy an entire directory with its contents, use the `-R` option.
+
+```
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Use `cp` command to copy files
+[hong@rhel9 ~]$ cp hello.txt world.txt
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+-rw-r--r--. 1 hong hong      0 Jan  5 21:49 world.txt
+
+# Use `cp` command to copy directories
+[hong@rhel9 ~]$ cp -R cpsy204 cpsy204.backup
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+-rw-r--r--. 1 hong hong      0 Jan  5 21:49 world.txt
+```
+
+### Move – File or Directory
+
+- The `mv` command moves both directories and files.
+- You also use the `mv` command to rename directories and files if the destination doesn't already exist.
+- If the destination exists, then they're moved using the syntax `mv {source} {destination}`. 
+
+```
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:43 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Use `mv` commmand to rename a file.
+[hong@rhel9 ~]$ mv hello.txt hello-world.txt
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:43 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello-world.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+[hong@rhel9 ~]$ tree cpsy204
+cpsy204
+├── lab1
+├── lab2
+├── lab3
+├── lab4
+├── lab5
+└── lab6
+    └── components
+        └── part1
+
+# Use `mv` command to move `hello-world.txt` under `cpsy204`
+[hong@rhel9 ~]$ mv hello-world.txt cpsy204/
+[hong@rhel9 ~]$ tree cpsy204/
+cpsy204/
+├── hello-world.txt
+├── lab1
+├── lab2
+├── lab3
+├── lab4
+├── lab5
+└── lab6
+    └── components
+        └── part1
+```
+
+### Remove/Delete – File and Directory
+
+- Use the `rm` command when you're sure you're ready to erase data permanently.
+- To delete a file, use `rm {file}`.
+- When a directory is empty, it can be removed using the `rmdir` command. When there are files and folders inside a directory, `rmdir` does not work.
+- We must use the `rm –r` command to recursively remove each file and folder at each level of the directory until the top-level directory is empty and can be removed.
+
+```
+[hong@rhel9 ~]$ ls -l
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+-rw-r--r--. 1 hong hong      0 Jan  5 21:49 world.txt
+
+# Remove a file
+[hong@rhel9 ~]$ rm world.txt
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+[hong@rhel9 ~]$ mkdir empty-folder
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+drwxr-xr-x. 2 hong hong      6 Jan  5 21:54 empty-folder
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Remove an empty directory
+[hong@rhel9 ~]$ rmdir empty-folder
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Remove a directory with files and folders in it
+[hong@rhel9 ~]$ tree cpsy204.backup/
+cpsy204.backup/
+├── lab1
+├── lab2
+├── lab3
+├── lab4
+├── lab5
+└── lab6
+    └── components
+        └── part1
+
+# `cpsy204.backup` has files and directories in it.
+# `rmdir` won't work.
+[hong@rhel9 ~]$ rmdir cpsy204.backup/
+rmdir: failed to remove 'cpsy204.backup/': Directory not empty
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Use `rm -r` to recursively delete all files and directories
+# in `cpsy204.backup`, then delete the empty `cpsy204.backup` directory
+[hong@rhel9 ~]$ rm -r cpsy204.backup/
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+```
+
+### `df` - Disk Filesystem
+
+- `df` can tell you what filesystem a file is part of, used and unused space, and where to find the file systems.
+- The `df` command primarily checks disk usage on a mounted filesystem. If you don't include a file name, the output shows the space available on all currently mounted filesystems.
+- Disk space is shown in 1K blocks by default. Lists of long numbers (as shown above) can be difficult to parse. If you want to run `df` in its human-readable format, use the `--human-readable` (`-h` for short) option.
+
+```
+# Use `df` against a file
+[hong@rhel9 ~]$ df hello.txt
+Filesystem            1K-blocks   Used Available Use% Mounted on
+/dev/mapper/rhel-home  42442752 684876  41757876   2% /home
+
+# Use `df` to check disk usage on a mounted filesystem
+[hong@rhel9 ~]$ df
+Filesystem            1K-blocks    Used Available Use% Mounted on
+devtmpfs                   4096       0      4096   0% /dev
+tmpfs                   8056084       0   8056084   0% /dev/shm
+tmpfs                   3222436    8796   3213640   1% /run
+efivarfs                    256      56       196  23% /sys/firmware/efi/efivars
+/dev/mapper/rhel-root  73334784 3201848  70132936   5% /
+/dev/sda2                983040  228652    754388  24% /boot
+/dev/sda1                613160    7200    605960   2% /boot/efi
+/dev/mapper/rhel-home  42442752  684876  41757876   2% /home
+tmpfs                   1611216       0   1611216   0% /run/user/1000
+
+# Make the output `--human-readable`
+[hong@rhel9 ~]$ df -h
+Filesystem             Size  Used Avail Use% Mounted on
+devtmpfs               4.0M     0  4.0M   0% /dev
+tmpfs                  7.7G     0  7.7G   0% /dev/shm
+tmpfs                  3.1G  8.6M  3.1G   1% /run
+efivarfs               256K   56K  196K  23% /sys/firmware/efi/efivars
+/dev/mapper/rhel-root   70G  3.1G   67G   5% /
+/dev/sda2              960M  224M  737M  24% /boot
+/dev/sda1              599M  7.1M  592M   2% /boot/efi
+/dev/mapper/rhel-home   41G  669M   40G   2% /home
+tmpfs                  1.6G     0  1.6G   0% /run/user/1000
+```
+
+### inodes
+
+- By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem, **except for the name of the file**.
+- Each piece of metadata describes what we think of as a file. Size, permissions, owners and groups, date and timestamps, and paths to where the data is stored.
+- The name of the file is stored in the File Allocation table, which tracks the names and inodes of files.
+- You can `df -i` to see number of inodes on a disk or a partition.
+
+![inodes](./intro-to-linux.assets/inodes.webp) 
+
+```
+[hong@rhel9 ~]$ df -h -i /dev/sda2
+Filesystem     Inodes IUsed IFree IUse% Mounted on
+/dev/sda2        512K    22  512K    1% /boot
+[hong@rhel9 ~]$ df -h -i /dev/sda1
+```
+
+### Links - Hard Link
+
+- inodes has everything about a file except for the name. Every file on the Linux filesystem starts with a single hard link. The *link* is between the filename and the actual data stored on the filesystem.
+- Use `ln {filename1} {filename2}` to create a hard link between a file (filename 1) and a linked file (filename2).
+- Creating an additional hard link to a file means a few different things.
+  - First, you create a new filename pointing to the exact same data as the old filename. This means that the two filenames, though different, point to identical data.
+  - When changes are made to one filename, the other reflects those changes. The permissions, link count, ownership, timestamps, and file content are the exact same.
+  - If the original file is deleted, the data still exists under the secondary hard link. The data is only removed from your drive when all links to the data have been removed.
+  - Hard links can only be created for regular files (not directories or special files).
+  - A hard link cannot span multiple filesystems.
+
+```
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# Create another hard link to hello.txt file
+[hong@rhel9 ~]$ ln hello.txt hello2.txt
+[hong@rhel9 ~]$ ll
+total 144
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 2 hong hong      0 Jan  5 21:35 hello2.txt
+-rw-r--r--. 2 hong hong      0 Jan  5 21:35 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# When changes are made to `hello.txt`,
+# `hello2.txt` reflects those changes.
+# Note the file size of both files.
+[hong@rhel9 ~]$ echo 'world' > hello.txt
+[hong@rhel9 ~]$ ll
+total 152
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 2 hong hong      6 Jan  5 22:10 hello2.txt
+-rw-r--r--. 2 hong hong      6 Jan  5 22:10 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+
+# There is still one link, `rm hello2.txt` will not
+# remove `hello.txt`
+[hong@rhel9 ~]$ rm hello2.txt
+[hong@rhel9 ~]$ ll
+total 148
+drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
+-rw-r--r--. 1 hong hong      6 Jan  5 22:10 hello.txt
+-rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
+drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
+```
+
+### Links - Soft/Symbolic Link
+
+- By definition, a soft link is not a standard file, but a special file that points to an existing file.
+- Commonly referred to as *symbolic links*, soft links link together non-regular and regular files.
+- A Soft/Symbolic link uses almost no HDD space, and it uses it’s own unique inode number. If the original file/directory is deleted, you can have a broken link, or a link that points to a non-existent resource.
+- Use `ln -s (file path you want to point to) (new file path)` to create a soft link between the original file and a linked file.
+
+![symlink](./intro-to-linux.assets/symlink.webp) 
+
+ ![symlink](./intro-to-linux.assets/symlink-6140842.webp) 
 
 
 
@@ -697,20 +1075,72 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 
 ## Network Management
 
-### Viewing Interfaces:
-- `ip link`: Lists all network interfaces.
-- `ip addr`: Displays detailed IP configuration.
+### List Network Interfaces
 
-### Managing Interfaces:
-- `nmcli`: Network Manager Command Line Interface.
-- `nmtui`: Text-based user interface for network configuration.
+- The `ip link` command shows the interfaces attached to the system, and some information about those interfaces, including MAC addressing and the status of the interface, whether it is up or down.
+
+- Use `nmcli connection show` to view all connections.
+
+```
+[hong@rhel9 ~]$ ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:50:56:a7:9d:fe brd ff:ff:ff:ff:ff:ff
+    altname enp2s1
+
+[hong@rhel9 ~]$ nmcli connection show
+NAME        UUID                                  TYPE      DEVICE
+ens33       c6703973-ca0d-3c8c-a556-a4a561ad970d  ethernet  ens33
+lo          672c2a61-2927-487b-92b6-2e561e7499fd  loopback  lo
+```
+
+### Display Interfaces and IP addressing
+
+- The `ip addr` or `ip a` command gives you more information about your interfaces, such as IPv4 and IPv6 Addressing, the state of the interface, and whether it was manually or dynamically configured.
+
+```
+[hong@rhel9 ~]$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:a7:9d:fe brd ff:ff:ff:ff:ff:ff
+    altname enp2s1
+    inet 10.0.0.21/16 brd 10.0.255.255 scope global noprefixroute ens33
+       valid_lft forever preferred_lft forever
+    inet6 fd00:0:10:0:250:56ff:fea7:9dfe/64 scope global dynamic noprefixroute
+       valid_lft 2591710sec preferred_lft 604510sec
+    inet6 fe80::250:56ff:fea7:9dfe/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+```
+
+### Network Manager
+
+- The `nmcli` (NetworkManager Command Line Interface) command-line utility is used for controlling NetworkManager and reporting network status.
+- The `nmtui` is a text-based user interface for network configuration.
+- Web console or automation software Ansible can be used to manage network.
+
+```
+# Configure static ip address
+$ sudo nmcli connection modify "Wired connection 1" \
+ipv4.addresses "10.0.0.10/16" \
+ipv4.gateway "10.0.0.1" \
+ipv4.dns "1.1.1.1 8.8.8.8" \
+ipv4.method "manual"
+
+$ sudo nmcli connection up "Wired connection 1"
+```
+
+![nmtui](./intro-to-linux.assets/nmtui.webp) 
 
 ---
 
-## Summary
+## Resources:
 
-- Linux is a robust, flexible, and secure operating system.
-- Offers extensive customization and cost-effectiveness.
-- Key components include distributions, shells, file systems, and networking tools.
+[RHEL 9 System Administration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9#System%20Administration)
 
-**For further study:** Refer to Red Hat Academy's RH124 materials, Chapters 1-3 and 12.
+[Linux Commands Cheat Sheet](https://developers.redhat.com/cheat-sheets/linux-commands-cheat-sheet)
