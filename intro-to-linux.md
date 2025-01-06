@@ -20,7 +20,8 @@ Linux is a **free and open-source operating system** that serves as a cornerston
 - **Linux Kernel:** Developed by Linus Torvalds in 1991.
 - **Open-source Movement:** Collaboratively maintained by a global community.
 
-![Linux-Torvalds-Shows-Off-His-Home-Working-Desk](./intro-to-linux.assets/Linux-Torvalds-Shows-Off-His-Home-Working-Desk.jpg)
+![Linux-Torvalds-Shows-Off-His-Home-Working-Desk](./intro-to-linux.assets/Linux-Torvalds-Shows-Off-His-Home-Working-Desk.jpg) 
+
 Credit: https://www.youtube.com/watch?v=jYUZAF3ePFE
 
 
@@ -75,7 +76,8 @@ Credit: https://www.youtube.com/watch?v=jYUZAF3ePFE
   4. **Default Software**: Varies between distros (e.g., desktop environments like GNOME or KDE).
   5. **Customization**: Some distros include unique configurations or optimizations for specific tasks.
 
-![the-stories-behind-debian-red-hat-and-arch-names](./intro-to-linux.assets/the-stories-behind-debian-red-hat-and-arch-names.jpg)
+![the-stories-behind-debian-red-hat-and-arch-names](./intro-to-linux.assets/the-stories-behind-debian-red-hat-and-arch-names.jpg) 
+
 Credit: https://www.reddit.com/r/DistroHopping/comments/1hubt22/the_stories_behind_debian_red_hat_and_arch_names/
 
 ### Popular Distros:
@@ -148,6 +150,8 @@ The open-source nature of Linux allows anyone to modify and distribute their own
 
   ![linux-shell](./intro-to-linux.assets/linux-shell.webp) 
 
+  Credit: https://unstop.com/blog/linux-shell 
+  
 - **Examples:**
   
   - `sh` (Bourne Shell)
@@ -247,8 +251,30 @@ Credit: https://xkcd.com/149/
 
 - To get help with any command you are looking into, you can add the the `--help` option following the command.
 - This brings up information regarding what mandatory and optional information goes along with the command.
+- Man pages are the go-to resource for nearly every Linux user working at the command line. Using the man pages is straightforward; simply type the `man` command and include the command you need more information about. For example, to display the manual for the `ls` command, type `man ls`.
 
-![get-help](./intro-to-linux.assets/get-help.webp) 
+``` 
+[hong@rhel9 ~]$ passwd --help
+Usage: passwd [OPTION...] <accountName>
+  -k, --keep-tokens       keep non-expired authentication tokens
+  -d, --delete            delete the password for the named account (root only); also removes password lock if any
+  -l, --lock              lock the password for the named account (root only)
+  -u, --unlock            unlock the password for the named account (root only)
+  -e, --expire            expire the password for the named account (root only)
+  -f, --force             force operation
+  -x, --maximum=DAYS      maximum password lifetime (root only)
+  -n, --minimum=DAYS      minimum password lifetime (root only)
+  -w, --warning=DAYS      number of days warning users receives before password expiration (root only)
+  -i, --inactive=DAYS     number of days after password expiration when an account becomes disabled (root only)
+  -S, --status            report password status on the named account (root only)
+      --stdin             read new tokens from stdin (root only)
+
+Help options:
+  -?, --help              Show this help message
+      --usage             Display brief usage message
+```
+
+![man-cmd](./intro-to-linux.assets/man-cmd.webp) 
 
 ### whoami
 
