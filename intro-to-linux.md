@@ -437,6 +437,37 @@ Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session closed for us
   - immediately skips to the end or beginning of the file or output,
   - allows faster access by not loading the entire file into memory at one time.
 
+### Word Count
+
+- The default output of `wc` is the file's number of lines, words, and characters, followed by its path.
+- `wc -l` print the newline counts.
+
+```
+$ wc zombie-apocalypse_plan-A.txt
+188  581 3591 zombie-apocalypse_plan-A.txt
+```
+
+[3 surprising things you can do with the Linux wc command](https://www.redhat.com/en/blog/linux-wc-command)
+
+### Repeating commands
+
+- To repeat a command, you can use double exclamation marks `!!`. In UNIX/Linux world, we call `!` a **bang**.
+- Repeating the nth command from your bash history (counting up from the bottom) is as simple as using a bang with a minus and the number in question.
+
+```
+$ cat hello.txt 
+Hello world ..!
+$ !!
+cat hello.txt 
+Hello world ..!
+
+[hong@rhel9 ~]$ !-3
+sudo ls /var/log/secure
+/var/log/secure
+```
+
+[Bash bang commands: A must-know trick for the Linux command line](https://www.redhat.com/en/blog/bash-bang-commands)
+
 
 
 ---
@@ -444,14 +475,197 @@ Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session closed for us
 ## Linux File System
 
 ### Hierarchical Structure:
-- **Root Directory (`/`):** Base of all files and directories.
+
+![standard-unix-filesystem-hierarchy-1](./intro-to-linux.assets/standard-unix-filesystem-hierarchy-1.webp) 
+
+Credit: the image is kindly supplied under a CC By-SA license by Paul Gardner.
+
+[Conventional directory layout](https://en.wikipedia.org/wiki/Unix_filesystem#Conventional_directory_layout)
+
+Here is a generalized overview of common locations of files on a Unix operating system:
+
+| Directory or file | Description                                                  |
+| :---------------: | :----------------------------------------------------------- |
+|        `/`        | The slash `/` character alone denotes the root of the filesystem tree. |
+|      `/bin`       | Stands for *[binaries](https://en.wikipedia.org/wiki/Computer_program)* and contains certain fundamental utilities, such as `ls` or `cp`, that are needed to mount `/usr`, when that is a separate filesystem, or to run in one-user (administrative) mode when `/usr` cannot be mounted. In System V.4, this is a symlink to `/usr/bin`. Otherwise, it needs to be on the root filesystem itself. |
+|      `/boot`      | Contains all the files needed for successful booting process. In [Research Unix](https://en.wikipedia.org/wiki/Research_Unix), this was one file rather than a directory.[[14\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-upe-14) Nowadays usually on the root filesystem itself, unless the system, bootloader etc. require otherwise. |
+|      `/dev`       | Stands for *devices*. Contains [file representations](https://en.wikipedia.org/wiki/Device_node) of peripheral devices and [pseudo-devices](https://en.wikipedia.org/wiki/Device_file#Pseudo-devices). See also: [Linux Assigned Names and Numbers Authority](https://en.wikipedia.org/wiki/Linux_Assigned_Names_and_Numbers_Authority). Needs to be on the root filesystem itself. |
+|      `/etc`       | Contains system-wide configuration files and system databases; the name stands for *[et cetera](https://en.wikipedia.org/wiki/Et_cetera)*[[14\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-upe-14) but now a better expansion is **e**ditable-**t**ext-**c**onfigurations. Originally also contained "dangerous maintenance utilities" such as `init`,[[6\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-v7-6) but these have typically been moved to `/sbin` or elsewhere. Needs to be on the root filesystem itself. |
+|      `/home`      | Contains user home directories on Linux and some other systems. In the original version of Unix, home directories were in `/usr` instead.[[15\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-notes72-15) Some systems use or have used different locations still: [macOS](https://en.wikipedia.org/wiki/MacOS) has home directories in `/Users`, older versions of BSD put them in `/u`, [FreeBSD](https://en.wikipedia.org/wiki/FreeBSD) has `/usr/home`. |
+|      `/lib`       | Originally *essential libraries*: [C](https://en.wikipedia.org/wiki/C_(programming_language)) libraries, but not [Fortran](https://en.wikipedia.org/wiki/Fortran) ones.[[14\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-upe-14) On modern systems, it contains the shared libraries needed by programs in `/bin`, and possibly [loadable kernel module](https://en.wikipedia.org/wiki/Loadable_kernel_module), [device drivers](https://en.wikipedia.org/wiki/Device_driver) or [binary blobs](https://en.wikipedia.org/wiki/Binary_blob). Linux distributions may have variants `/lib32` and `/lib64` for multi-architecture support. |
+|     `/media`      | Default mount point for removable devices, such as USB sticks, media players, etc. By common sense, the directory itself, whose subdirectories are mountpoints, is on the root partition itself. |
+|      `/mnt`       | Stands for *mount*. Empty directory commonly used by system administrators as a temporary mount point. By common sense, the directory itself, whose subdirectories are mountpoints, is on the root partition itself. |
+|      `/opt`       | Contains locally installed software. Originated in [System V](https://en.wikipedia.org/wiki/UNIX_System_V), which has a [package manager](https://en.wikipedia.org/wiki/Package_manager) that installs software to this directory (one subdirectory per package).[[16\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-16) |
+|      `/proc`      | [procfs](https://en.wikipedia.org/wiki/Procfs) virtual [filesystem](https://en.wikipedia.org/wiki/File_system) showing information about [processes](https://en.wikipedia.org/wiki/Process_(computing)) as files. |
+|      `/root`      | The home directory for the [superuser](https://en.wikipedia.org/wiki/Superuser) *root* - that is, the system administrator. This account's home directory is usually on the initial filesystem, and hence not in /home (which may be a mount point for another filesystem) in case specific maintenance needs to be performed, during which other filesystems are not available. Such a case could occur, for example, if a hard disk drive suffers failures and cannot be properly mounted. |
+|      `/sbin`      | Stands for "[system (or superuser) binaries](https://en.wikipedia.org/wiki/Computer_program)" and contains fundamental utilities, such as `init`, usually needed to start, maintain and recover the system. Needs to be on the root partition itself. |
+|      `/srv`       | Server data (data for services provided by system).          |
+|      `/sys`       | In some [Linux distributions](https://en.wikipedia.org/wiki/Linux_distribution), contains a [sysfs](https://en.wikipedia.org/wiki/Sysfs) virtual [filesystem](https://en.wikipedia.org/wiki/File_system), containing information related to hardware and the operating system. On BSD systems, commonly a symlink to the kernel sources in `/usr/src/sys`. |
+|      `/tmp`       | A place for temporary files not expected to survive a reboot. Many systems clear this directory upon startup or use [tmpfs](https://en.wikipedia.org/wiki/Tmpfs) to implement it. |
+|      `/unix`      | The Unix [kernel](https://en.wikipedia.org/wiki/Kernel_(operating_system)) in Research Unix and [System V](https://en.wikipedia.org/wiki/UNIX_System_V).[[14\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-upe-14) With the addition of [virtual memory](https://en.wikipedia.org/wiki/Virtual_memory) support to [3BSD](https://en.wikipedia.org/wiki/Berkeley_Software_Distribution#3BSD), this got renamed `/vmunix`. |
+|      `/usr`       | The "user file system": originally the directory holding user home directories,[[15\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-notes72-15) but already by the Third Edition of [Research Unix](https://en.wikipedia.org/wiki/Research_Unix), ca. 1973, reused to split the operating system's programs over two disks (one of them a 256K fixed-head drive) so that basic commands would either appear in `/bin` or `/usr/bin`.[[17\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-reader-17) It now holds executables, libraries, and shared resources that are not system critical, such as the [X Window System](https://en.wikipedia.org/wiki/X_Window_System), [window managers](https://en.wikipedia.org/wiki/Window_manager), [scripting languages](https://en.wikipedia.org/wiki/Scripting_language), etc. In older Unix systems, user home directories might still appear in `/usr` alongside directories containing programs, although by 1984 this depended on local customs.[[14\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-upe-14) |
+|  `/usr/include`   | Stores the development headers used throughout the system. [Header files](https://en.wikipedia.org/wiki/Header_file) are mostly used by the `#include` directive in [C](https://en.wikipedia.org/wiki/C_(programming_language)) language, which historically is how the name of this directory was chosen. |
+|    `/usr/lib`     | Stores the needed libraries and data files for programs stored within `/usr` or elsewhere. |
+|  `/usr/libexec`   | Holds programs meant to be executed by other programs rather than by users directly. E.g., the [Sendmail](https://en.wikipedia.org/wiki/Sendmail) executable may be found in this directory.[[18\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-18) Not present in the FHS until 2011;[[19\]](https://en.wikipedia.org/wiki/Unix_filesystem#cite_note-19) Linux distributions have traditionally moved the contents of this directory into `/usr/lib`, where they also resided in 4.3BSD. |
+|   `/usr/local`    | Resembles `/usr` in structure, but its subdirectories are used for additions not part of the operating system distribution, such as custom programs or files from a [BSD](https://en.wikipedia.org/wiki/BSD) [Ports collection](https://en.wikipedia.org/wiki/Ports_collection). Usually has subdirectories such as `/usr/local/lib` or `/usr/local/bin`. |
+|   `/usr/share`    | Architecture-independent program data. On Linux and modern BSD derivatives, this directory has subdirectories such as `man` for [manpages](https://en.wikipedia.org/wiki/Manpage), that used to appear directly under `/usr` in older versions. |
+|      `/var`       | Stands for *variable*. A place for files that might change frequently - especially in size, for example e-mail sent to users on the system, or process-ID [lock files](https://en.wikipedia.org/wiki/Lock_file). |
+|    `/var/log`     | Contains system log files.                                   |
+|    `/var/mail`    | The place where all incoming mail is stored. Users (other than `root`) can access their own mail only. Often, this directory is a [symbolic link](https://en.wikipedia.org/wiki/Symbolic_link) to `/var/spool/mail`. |
+|   `/var/spool`    | [Spool](https://en.wikipedia.org/wiki/Spooling) directory. Contains print jobs, mail spools and other queued tasks. |
+|    `/var/src`     | The place where the uncompiled source code of some programs is. |
+|    `/var/tmp`     | The `/var/tmp` directory is a place for temporary files which should be preserved between system reboots. |
+
 - **Key Directories:**
+  - `/`: Base of all files and directories.
   - `/bin`: Essential binaries (e.g., `ls`, `cp`).
+  - `/boot`: The `/boot` directory contains files required for starting your system. **DO NOT TOUCH!**
+  - `/dev`: `/dev` contains device files. Many of these are generated at boot time or even on the fly.
   - `/sbin`: System binaries (e.g., `fsck`, `iptables`).
-  - `/etc`: Configuration files.
+  - `/etc`: *etc* stands for “Everything to configure,” as it contains most, if not all system-wide configuration files.
   - `/home`: User home directories.
   - `/var`: Variable data like logs.
   - `/tmp`: Temporary files.
+
+### Path
+
+https://www.linuxfoundation.org/blog/blog/classic-sysadmin-absolute-path-vs-relative-path-in-linux-unix
+
+> A path is a unique location to a file or a folder in a file system of an OS. A path to a file is a combination of / and alpha-numeric characters.
+
+- Absolute path: An absolute path is defined as the specifying the location of a file or directory from the root directory(`/`). In other words we can say absolute path is a complete path from start of actual filesystem from `/` directory.
+- You can always get the absolute path of a file with the `realpath` command.
+- Relative path: Relative path is defined as path related to the present working directory(`pwd`).
+
+```
+# Absolute path
+$ cd /usr/local/bin
+
+[hong@rhel9 log]$ realpath lastlog
+/var/log/lastlog
+
+# Relative path
+[hong@rhel9 tmp]$ cd labs
+[hong@rhel9 labs]$ tree .
+.
+├── lab1
+├── lab2  <- after `cd lab2` command, you are here.
+└── lab3  <- use `cd ../lab3` to go here. `..` is parent folder.
+
+[hong@rhel9 labs]$ cd lab2
+[hong@rhel9 lab2]$ pwd
+/tmp/labs/lab2
+
+# More on `cd` command later
+[hong@rhel9 lab2]$ cd ../lab3
+[hong@rhel9 lab3]$ pwd
+/tmp/labs/lab3
+```
+
+### List
+
+- The `ls` command is used to display the contents of the current folder. This only displays the names of files or folders in the directory.
+- The `-l` option signifies the long list format. This shows a lot more information presented to the user than the standard command. You will see the file permissions, the number of links, owner name, owner group, file size, time of last modification, and the file or directory name. This option is used in conjunction with many other options on a regular basis.
+- The `-lh` flag is the same long list format command as above, however, the file size is displayed in a human-readable format. Notice the difference between the file size outputs in the previous two screens.
+
+```
+# Note that `/usr` absolute path is used
+[hong@rhel9 usr]$ ls /usr
+bin  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
+
+[hong@rhel9 usr]$ ls -l
+total 132
+dr-xr-xr-x.   2 root root 28672 Jan  5 21:01 bin
+drwxr-xr-x.   2 root root     6 Jun 25  2024 games
+drwxr-xr-x.  33 root root  4096 Jan  3 22:26 include
+dr-xr-xr-x.  34 root root  4096 Jan  3 22:26 lib
+dr-xr-xr-x.  53 root root 32768 Jan  3 22:28 lib64
+drwxr-xr-x.  31 root root  4096 Jan  3 22:26 libexec
+drwxr-xr-x.  13 root root   140 Jan  3 22:27 local
+dr-xr-xr-x.   2 root root 12288 Jan  3 22:21 sbin
+drwxr-xr-x. 101 root root  4096 Jan  4 17:38 share
+drwxr-xr-x.   4 root root    34 Jan  3 21:18 src
+
+[hong@rhel9 usr]$ ls -lh
+total 132K
+dr-xr-xr-x.   2 root root  28K Jan  5 21:01 bin
+drwxr-xr-x.   2 root root    6 Jun 25  2024 games
+drwxr-xr-x.  33 root root 4.0K Jan  3 22:26 include
+dr-xr-xr-x.  34 root root 4.0K Jan  3 22:26 lib
+dr-xr-xr-x.  53 root root  32K Jan  3 22:28 lib64
+drwxr-xr-x.  31 root root 4.0K Jan  3 22:26 libexec
+drwxr-xr-x.  13 root root  140 Jan  3 22:27 local
+dr-xr-xr-x.   2 root root  12K Jan  3 22:21 sbin
+drwxr-xr-x. 101 root root 4.0K Jan  4 17:38 share
+drwxr-xr-x.   4 root root   34 Jan  3 21:18 src
+```
+
+More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.redhat.com/en/blog/ls-command-options)
+
+### Print Working Directory
+
+- The `pwd` command prints the current/working directory, telling where you are currently located in the filesystem.
+- This command comes to your rescue when you get lost in the filesystem, and always prints out the *absolute path*.
+
+```
+[hong@rhel9 usr]$ cd local
+[hong@rhel9 local]$ cd bin
+[hong@rhel9 bin]$ pwd
+/usr/local/bin
+```
+
+### Change Directory
+
+- The `cd` command lets you change to a different directory. When you log into a Linux machine or fire up a terminal emulator, by default your working directory is your home directory.
+- Absolute and relative paths make more sense when we look at examples for the `cd` command. If you need to move one level up from your working directory, in this case `/home`, we can do this couple of ways. One way is to issue a `cd ..` command relative to your `pwd`. Remember, `..` represents the directory one level above the working directory.
+- The other way is to provide the absolute path to the directory: `cd /home`
+- The `cd` command can be used with a relative path to move you from a sub-directory in a branch to another sub-directory in the same branch.
+- If your working directory is deeply nested inside the filesystem and you need to return to your home directory, this is where the `~` comes in with the `cd` command.
+- Previous Directory: The `cd -` command can be used to return the user to the last directory they were working in by using the hyphen or dash key.
+
+```
+# Go back to your home
+[hong@rhel9 bin]$ cd ~
+[hong@rhel9 ~]$ pwd
+/home/hong
+
+# Go up a level by using double dots `..`
+[hong@rhel9 ~]$ cd ..
+[hong@rhel9 home]$ pwd
+/home
+
+# `cd` without options takes you back to your home too
+[hong@rhel9 home]$ cd
+[hong@rhel9 ~]$ pwd
+/home/hong
+
+# Use absolute path
+[hong@rhel9 ~]$ cd /home
+
+# The cd command can be used to return the user to the
+# root directory of the file system by using the forward-slash.
+[hong@rhel9 home]$ cd /
+[hong@rhel9 /]$ pwd
+/
+
+# `cd -` returns the user to the last directory they were working in
+[hong@rhel9 /]$ cd ~
+[hong@rhel9 ~]$ pwd
+/home/hong
+[hong@rhel9 ~]$ cd /usr/local/bin
+[hong@rhel9 bin]$ pwd
+/usr/local/bin
+[hong@rhel9 bin]$ cd -
+/home/hong
+[hong@rhel9 ~]$ pwd
+/home/hong
+```
+
+
+
+
+
+
 
 ---
 
