@@ -34,16 +34,32 @@ Credit: https://www.youtube.com/watch?v=jYUZAF3ePFE
 - > Open-source software (OSS) is computer software that is released under a license in which the copyright holder grants users the rights to use, study, change, and distribute the software and its source code to anyone and for any purpose.
   >
   > Credit: https://en.wikipedia.org/wiki/Open-source_software
-- **Examples:** Debian, Fedora.
+  
+  - **Philosophy**: Collaboration, transparency, and community-driven innovation.
+  - **Operating System Examples**: Linux (Ubuntu, Debian, Fedora), FreeBSD.
+  
+  - **Application Examples**: Firefox, LibreOffice, VLC Media Player.
+  
+
+![osi-horizontal-large](./intro-to-linux.assets/osi-horizontal-large.webp) 
 
 ### Closed-Source:
-- While Linux is open-sourced, not all of its distributions are; as they may include closed-source components or add-ons.
-- These closed-source components or add-ons can be additional software or drivers that are not publicly available. They are maintained by the Linux distribution provider or a third party. These are for profit companies that do not allow for the modification or redistribution of their code.
-- **Examples:** 
-  - Red Hat Enterprise Linux (RHEL), which combines open-source components with proprietary support services.
-  - SteamOS, a public release of our Linux-based operating system. The base system draws from Debian 8, code named Debian Jessie.  https://store.steampowered.com/steamos
+
+- **Proprietary software**: Software whose source code is a closely guarded secret. Only the original authors or the company that owns the copyright can see or modify the code.
+
+  - **Philosophy**: Profit-driven, controlled user experience, and vendor-backed stability.
 
 
+  - **Operating System Examples**: Microsoft Windows, Apple macOS/iOS.
+
+
+  - **Application Examples**: Microsoft Office, Adobe Photoshop, Spotify
+
+- While Linux is open-sourced, not all of its distributions are; as they may include closed-source components or add-ons. These closed-source components or add-ons can be additional software or drivers that are not publicly available. They are maintained by the Linux distribution provider or a third party. These are for profit companies that do not allow for the modification or redistribution of their code. For example, Red Hat Enterprise Linux (RHEL), which combines open-source components with proprietary support services.
+
+![open-vs-closed-source-1](./intro-to-linux.assets/open-vs-closed-source-1.webp) 
+
+![open-vs-closed-source-2](./intro-to-linux.assets/open-vs-closed-source-2.webp) 
 
 ---
 
@@ -90,7 +106,7 @@ Credit: https://www.reddit.com/r/DistroHopping/comments/1hubt22/the_stories_behi
   - **Red Hat Enterprise Linux (RHEL)**: Enterprise-level features with paid support.
   - **Ubuntu Server**: Optimized for cloud and container environments.
 
-- **Desktop-Focused:** Linux Mint , [Pop!_OS](https://pop.system76.com/), [EndeavourOS](https://endeavouros.com/).
+- **Desktop-Focused:** [Linux Mint](https://linuxmint.com/) , [Pop!_OS](https://pop.system76.com/), [EndeavourOS](https://endeavouros.com/).
 
   ![pop_os](./intro-to-linux.assets/pop_os.webp)
   Credit: https://support.system76.com/articles/pop-basics/
@@ -254,7 +270,7 @@ Credit: https://xkcd.com/149/
 - Man pages are the go-to resource for nearly every Linux user working at the command line. Using the man pages is straightforward; simply type the `man` command and include the command you need more information about. For example, to display the manual for the `ls` command, type `man ls`.
 
 ``` 
-[hong@rhel9 ~]$ passwd --help
+[hong@rhel10 ~]$ passwd --help
 Usage: passwd [OPTION...] <accountName>
   -k, --keep-tokens       keep non-expired authentication tokens
   -d, --delete            delete the password for the named account (root only); also removes password lock if any
@@ -314,11 +330,11 @@ or available locally via: info '(coreutils) id invocation'
 - By adding arguments to the command, we can obtain just the current date.
 
 ```
-[hong@rhel9 ~]$ date
-Sun 05 Jan 2025 08:10:21 PM MST
+[hong@rhel10 ~]$ date
+Mon 05 Jan 2026 08:10:21 PM MST
 
-[hong@rhel9 ~]$ date +%Y/%m/%d
-2025/01/05
+[hong@rhel10 ~]$ date +%Y/%m/%d
+2026/01/05
 ```
 
 ### Passwords
@@ -330,7 +346,7 @@ Sun 05 Jan 2025 08:10:21 PM MST
 [Managing Linux users with the passwd command](https://www.redhat.com/en/blog/managing-users-passwd)
 
 ```
-[hong@rhel9 ~]$ passwd
+[hong@rhel10 ~]$ passwd
 Changing password for user hong.
 Current password:
 New password:
@@ -338,7 +354,7 @@ Retype new password:
 passwd: all authentication tokens updated successfully.
 
 # Notice that a superuser 'breakglass' change the password for user 'hong'
-[breakglass@rhel9 ~]$ sudo passwd hong
+[breakglass@rhel10 ~]$ sudo passwd hong
 Changing password for user hong.
 New password:
 Retype new password:
@@ -351,7 +367,7 @@ passwd: all authentication tokens updated successfully.
 - You can limit the output by specifying how many commands you would like to see, beginning with the most recent.
 
 ```
-[hong@rhel9 ~]$ history 10
+[hong@rhel10 ~]$ history 10
    70  sudo su breakglass
    71  history
    72  history 10
@@ -369,13 +385,13 @@ passwd: all authentication tokens updated successfully.
 - The file command returns output regarding the type of file being presented, and data regarding that file.
 
 ```
-[hong@rhel9 ~]$ file /usr/local/bin/node
+[hong@rhel10 ~]$ file /usr/local/bin/node
 /usr/local/bin/node: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=314a8e24a99731ed1b375660a93f7253ed293435, for GNU/Linux 3.2.0, with debug_info, not stripped, too many notes (256)
 
-[hong@rhel9 ~]$ file rhcsa9.png
+[hong@rhel10 ~]$ file rhcsa9.png
 rhcsa9.png: PNG image data, 1912 x 986, 8-bit/color RGBA, non-interlaced
 
-[hong@rhel9 ~]$ file rhcsa9.jpg
+[hong@rhel10 ~]$ file rhcsa9.jpg
 rhcsa9.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=6, orientation=upper-left, xresolution=86, yresolution=94, resolutionunit=2], baseline, precision 8, 1912x986, components 3
 ```
 
@@ -386,7 +402,7 @@ rhcsa9.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 72x72
   - and printing the contents of a file to the screen. Printing the contents of files is by far the more frequent use of this command.
 
 ```
-[hong@rhel9 ~]$ cat /etc/passwd
+[hong@rhel10 ~]$ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
@@ -421,7 +437,7 @@ breakglass:x:1001:1001::/home/breakglass:/bin/bash
 
 ```
 # head without command line arguments displays first 10 lines of /etc/passwd file
-[hong@rhel9 ~]$ head /etc/passwd
+[hong@rhel10 ~]$ head /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
@@ -434,23 +450,23 @@ mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
 operator:x:11:0:operator:/root:/sbin/nologin
 
 # Display first 3 lines of /etc/passwd file
-[hong@rhel9 ~]$ head -3 /etc/passwd
+[hong@rhel10 ~]$ head -3 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
 
 # Display last 10 lines of /var/log/secure file
-[hong@rhel9 ~]$ sudo tail /var/log/secure
-Jan  5 20:19:10 rhel9 sshd[35176]: pam_unix(sshd:session): session opened for user hong(uid=1000) by hong(uid=0)
-Jan  5 20:19:10 rhel9 sshd[35179]: Received disconnect from 10.0.0.1 port 53200:11: disconnected by user
-Jan  5 20:19:10 rhel9 sshd[35179]: Disconnected from user hong 10.0.0.1 port 53200
-Jan  5 20:19:10 rhel9 sshd[35176]: pam_unix(sshd:session): session closed for user hong
-Jan  5 20:33:45 rhel9 sudo[35221]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat secure
-Jan  5 20:33:45 rhel9 sudo[35221]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
-Jan  5 20:33:45 rhel9 sudo[35221]: pam_unix(sudo:session): session closed for user root
-Jan  5 20:33:50 rhel9 sudo[35224]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/tail secure
-Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
-Jan  5 20:33:50 rhel9 sudo[35224]: pam_unix(sudo:session): session closed for user root
+[hong@rhel10 ~]$ sudo tail /var/log/secure
+Jan  5 20:19:10 rhel10 sshd[35176]: pam_unix(sshd:session): session opened for user hong(uid=1000) by hong(uid=0)
+Jan  5 20:19:10 rhel10 sshd[35179]: Received disconnect from 10.0.0.1 port 53200:11: disconnected by user
+Jan  5 20:19:10 rhel10 sshd[35179]: Disconnected from user hong 10.0.0.1 port 53200
+Jan  5 20:19:10 rhel10 sshd[35176]: pam_unix(sshd:session): session closed for user hong
+Jan  5 20:33:45 rhel10 sudo[35221]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat secure
+Jan  5 20:33:45 rhel10 sudo[35221]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
+Jan  5 20:33:45 rhel10 sudo[35221]: pam_unix(sudo:session): session closed for user root
+Jan  5 20:33:50 rhel10 sudo[35224]:    hong : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/tail secure
+Jan  5 20:33:50 rhel10 sudo[35224]: pam_unix(sudo:session): session opened for user root(uid=0) by hong(uid=1000)
+Jan  5 20:33:50 rhel10 sudo[35224]: pam_unix(sudo:session): session closed for user root
 ```
 
 ### `more` and `less`
@@ -487,7 +503,7 @@ $ !!
 cat hello.txt 
 Hello world ..!
 
-[hong@rhel9 ~]$ !-3
+[hong@rhel10 ~]$ !-3
 sudo ls /var/log/secure
 /var/log/secure
 ```
@@ -567,24 +583,24 @@ https://www.linuxfoundation.org/blog/blog/classic-sysadmin-absolute-path-vs-rela
 # Absolute path
 $ cd /usr/local/bin
 
-[hong@rhel9 log]$ realpath lastlog
+[hong@rhel10 log]$ realpath lastlog
 /var/log/lastlog
 
 # Relative path
-[hong@rhel9 tmp]$ cd labs
-[hong@rhel9 labs]$ tree .
+[hong@rhel10 tmp]$ cd labs
+[hong@rhel10 labs]$ tree .
 .
 ├── lab1
 ├── lab2  <- after `cd lab2` command, you are here.
 └── lab3  <- use `cd ../lab3` to go here. `..` is parent folder.
 
-[hong@rhel9 labs]$ cd lab2
-[hong@rhel9 lab2]$ pwd
+[hong@rhel10 labs]$ cd lab2
+[hong@rhel10 lab2]$ pwd
 /tmp/labs/lab2
 
 # More on `cd` command later
-[hong@rhel9 lab2]$ cd ../lab3
-[hong@rhel9 lab3]$ pwd
+[hong@rhel10 lab2]$ cd ../lab3
+[hong@rhel10 lab3]$ pwd
 /tmp/labs/lab3
 ```
 
@@ -596,10 +612,10 @@ $ cd /usr/local/bin
 
 ```
 # Note that `/usr` absolute path is used
-[hong@rhel9 usr]$ ls /usr
+[hong@rhel10 usr]$ ls /usr
 bin  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
 
-[hong@rhel9 usr]$ ls -l
+[hong@rhel10 usr]$ ls -l
 total 132
 dr-xr-xr-x.   2 root root 28672 Jan  5 21:01 bin
 drwxr-xr-x.   2 root root     6 Jun 25  2024 games
@@ -612,7 +628,7 @@ dr-xr-xr-x.   2 root root 12288 Jan  3 22:21 sbin
 drwxr-xr-x. 101 root root  4096 Jan  4 17:38 share
 drwxr-xr-x.   4 root root    34 Jan  3 21:18 src
 
-[hong@rhel9 usr]$ ls -lh
+[hong@rhel10 usr]$ ls -lh
 total 132K
 dr-xr-xr-x.   2 root root  28K Jan  5 21:01 bin
 drwxr-xr-x.   2 root root    6 Jun 25  2024 games
@@ -634,9 +650,9 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 - This command comes to your rescue when you get lost in the filesystem, and always prints out the *absolute path*.
 
 ```
-[hong@rhel9 usr]$ cd local
-[hong@rhel9 local]$ cd bin
-[hong@rhel9 bin]$ pwd
+[hong@rhel10 usr]$ cd local
+[hong@rhel10 local]$ cd bin
+[hong@rhel10 bin]$ pwd
 /usr/local/bin
 ```
 
@@ -651,39 +667,39 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 
 ```
 # Go back to your home
-[hong@rhel9 bin]$ cd ~
-[hong@rhel9 ~]$ pwd
+[hong@rhel10 bin]$ cd ~
+[hong@rhel10 ~]$ pwd
 /home/hong
 
 # Go up a level by using double dots `..`
-[hong@rhel9 ~]$ cd ..
-[hong@rhel9 home]$ pwd
+[hong@rhel10 ~]$ cd ..
+[hong@rhel10 home]$ pwd
 /home
 
 # `cd` without options takes you back to your home
-[hong@rhel9 home]$ cd
-[hong@rhel9 ~]$ pwd
+[hong@rhel10 home]$ cd
+[hong@rhel10 ~]$ pwd
 /home/hong
 
 # Use absolute path
-[hong@rhel9 ~]$ cd /home
+[hong@rhel10 ~]$ cd /home
 
 # The `cd /` command can be used to return the user to the
 # root directory of the file system by using the forward-slash.
-[hong@rhel9 home]$ cd /
-[hong@rhel9 /]$ pwd
+[hong@rhel10 home]$ cd /
+[hong@rhel10 /]$ pwd
 /
 
 # `cd -` returns the user to the last directory they were working in
-[hong@rhel9 /]$ cd ~
-[hong@rhel9 ~]$ pwd
+[hong@rhel10 /]$ cd ~
+[hong@rhel10 ~]$ pwd
 /home/hong
-[hong@rhel9 ~]$ cd /usr/local/bin
-[hong@rhel9 bin]$ pwd
+[hong@rhel10 ~]$ cd /usr/local/bin
+[hong@rhel10 bin]$ pwd
 /usr/local/bin
-[hong@rhel9 bin]$ cd -
+[hong@rhel10 bin]$ cd -
 /home/hong
-[hong@rhel9 ~]$ pwd
+[hong@rhel10 ~]$ pwd
 /home/hong
 ```
 
@@ -705,13 +721,13 @@ More about `ls` command: [11 ways to use the `ls` command in Linux](https://www.
 - Use `touch` to update the last accessed timestamp.
 
 ```
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ ls -l
 total 144
 -rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 # Use `touch` to create an empty file `hello.txt`
-[hong@rhel9 ~]$ touch hello.txt
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ touch hello.txt
+[hong@rhel10 ~]$ ls -l
 total 144
 -rw-r--r--. 1 hong hong      0 Jan  5 21:33 hello.txt   <- Note the time is 21:33
 -rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
@@ -719,8 +735,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Two minutes later, use `touch` command against the same
 # `hello.txt` file to update the last accessed timestamp.
-[hong@rhel9 ~]$ touch hello.txt
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ touch hello.txt
+[hong@rhel10 ~]$ ls -l
 total 144
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt   <- Note the time is 21:35
 -rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
@@ -737,8 +753,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 - You can even create a batch of directories starting with the same pattern. Prepend the curly brackets with the pattern and use the brackets to specify the number of directories.
 
 ```
-[hong@rhel9 ~]$ mkdir cpsy204
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ mkdir cpsy204
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 2 hong hong      6 Jan  5 21:38 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -746,21 +762,21 @@ drwxr-xr-x. 2 hong hong      6 Jan  5 21:38 cpsy204
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Make multiple directories
-[hong@rhel9 ~]$ mkdir cpsy204/lab1 cpsy204/lab2
-[hong@rhel9 ~]$ ls -l cpsy204
+[hong@rhel10 ~]$ mkdir cpsy204/lab1 cpsy204/lab2
+[hong@rhel10 ~]$ ls -l cpsy204
 total 0
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
 
-[hong@rhel9 ~]$ cd cpsy204/
-[hong@rhel9 cpsy204]$ ls -l
+[hong@rhel10 ~]$ cd cpsy204/
+[hong@rhel10 cpsy204]$ ls -l
 total 0
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
 
 # Use `mkdir` with curly brackets `{}` to create multiple directories. 
-[hong@rhel9 cpsy204]$ mkdir lab{3..5}
-[hong@rhel9 cpsy204]$ ls -l
+[hong@rhel10 cpsy204]$ mkdir lab{3..5}
+[hong@rhel10 cpsy204]$ ls -l
 total 0
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab1
 drwxr-xr-x. 2 hong hong 6 Jan  5 21:38 lab2
@@ -770,8 +786,8 @@ drwxr-xr-x. 2 hong hong 6 Jan  5 21:40 lab5
 
 # To create a directory with a directory inside of it,
 # use the `-p` option.
-[hong@rhel9 cpsy204]$ mkdir -p lab6/components/part1
-[hong@rhel9 cpsy204]$ tree .
+[hong@rhel10 cpsy204]$ mkdir -p lab6/components/part1
+[hong@rhel10 cpsy204]$ tree .
 .
 ├── lab1
 ├── lab2
@@ -791,7 +807,7 @@ drwxr-xr-x. 2 hong hong 6 Jan  5 21:40 lab5
 - To copy an entire directory with its contents, use the `-R` option.
 
 ```
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -799,8 +815,8 @@ drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Use `cp` command to copy files
-[hong@rhel9 ~]$ cp hello.txt world.txt
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ cp hello.txt world.txt
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -809,8 +825,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 -rw-r--r--. 1 hong hong      0 Jan  5 21:49 world.txt
 
 # Use `cp` command to copy directories
-[hong@rhel9 ~]$ cp -R cpsy204 cpsy204.backup
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ cp -R cpsy204 cpsy204.backup
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -827,7 +843,7 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 - If the destination exists, then they're moved using the syntax `mv {source} {destination}`. 
 
 ```
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:43 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -835,15 +851,15 @@ drwxr-xr-x. 8 hong hong     78 Jan  5 21:43 cpsy204
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Use `mv` commmand to rename a file.
-[hong@rhel9 ~]$ mv hello.txt hello-world.txt
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ mv hello.txt hello-world.txt
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:43 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello-world.txt
 -rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
-[hong@rhel9 ~]$ tree cpsy204
+[hong@rhel10 ~]$ tree cpsy204
 cpsy204
 ├── lab1
 ├── lab2
@@ -855,8 +871,8 @@ cpsy204
         └── part1
 
 # Use `mv` command to move `hello-world.txt` under `cpsy204`
-[hong@rhel9 ~]$ mv hello-world.txt cpsy204/
-[hong@rhel9 ~]$ tree cpsy204/
+[hong@rhel10 ~]$ mv hello-world.txt cpsy204/
+[hong@rhel10 ~]$ tree cpsy204/
 cpsy204/
 ├── hello-world.txt
 ├── lab1
@@ -877,7 +893,7 @@ cpsy204/
 - We must use the `rm –r` command to recursively remove each file and folder at each level of the directory until the top-level directory is empty and can be removed.
 
 ```
-[hong@rhel9 ~]$ ls -l
+[hong@rhel10 ~]$ ls -l
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -887,8 +903,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 -rw-r--r--. 1 hong hong      0 Jan  5 21:49 world.txt
 
 # Remove a file
-[hong@rhel9 ~]$ rm world.txt
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ rm world.txt
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -896,8 +912,8 @@ drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
 -rw-r--r--. 1 hong hong 144037 Jan  5 20:19 rhcsa9.jpg
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
-[hong@rhel9 ~]$ mkdir empty-folder
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ mkdir empty-folder
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -907,8 +923,8 @@ drwxr-xr-x. 2 hong hong      6 Jan  5 21:54 empty-folder
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Remove an empty directory
-[hong@rhel9 ~]$ rmdir empty-folder
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ rmdir empty-folder
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -917,7 +933,7 @@ drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Remove a directory with files and folders in it
-[hong@rhel9 ~]$ tree cpsy204.backup/
+[hong@rhel10 ~]$ tree cpsy204.backup/
 cpsy204.backup/
 ├── lab1
 ├── lab2
@@ -930,9 +946,9 @@ cpsy204.backup/
 
 # `cpsy204.backup` has files and directories in it.
 # `rmdir` won't work.
-[hong@rhel9 ~]$ rmdir cpsy204.backup/
+[hong@rhel10 ~]$ rmdir cpsy204.backup/
 rmdir: failed to remove 'cpsy204.backup/': Directory not empty
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204.backup
@@ -942,8 +958,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Use `rm -r` to recursively delete all files and directories
 # in `cpsy204.backup`, then delete the empty `cpsy204.backup` directory
-[hong@rhel9 ~]$ rm -r cpsy204.backup/
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ rm -r cpsy204.backup/
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -959,12 +975,12 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 ```
 # Use `df` against a file
-[hong@rhel9 ~]$ df hello.txt
+[hong@rhel10 ~]$ df hello.txt
 Filesystem            1K-blocks   Used Available Use% Mounted on
 /dev/mapper/rhel-home  42442752 684876  41757876   2% /home
 
 # Use `df` to check disk usage on a mounted filesystem
-[hong@rhel9 ~]$ df
+[hong@rhel10 ~]$ df
 Filesystem            1K-blocks    Used Available Use% Mounted on
 devtmpfs                   4096       0      4096   0% /dev
 tmpfs                   8056084       0   8056084   0% /dev/shm
@@ -977,7 +993,7 @@ efivarfs                    256      56       196  23% /sys/firmware/efi/efivars
 tmpfs                   1611216       0   1611216   0% /run/user/1000
 
 # Make the output `--human-readable`
-[hong@rhel9 ~]$ df -h
+[hong@rhel10 ~]$ df -h
 Filesystem             Size  Used Avail Use% Mounted on
 devtmpfs               4.0M     0  4.0M   0% /dev
 tmpfs                  7.7G     0  7.7G   0% /dev/shm
@@ -1000,10 +1016,10 @@ tmpfs                  1.6G     0  1.6G   0% /run/user/1000
 ![inodes](./intro-to-linux.assets/inodes.webp) 
 
 ```
-[hong@rhel9 ~]$ df -h -i /dev/sda2
+[hong@rhel10 ~]$ df -h -i /dev/sda2
 Filesystem     Inodes IUsed IFree IUse% Mounted on
 /dev/sda2        512K    22  512K    1% /boot
-[hong@rhel9 ~]$ df -h -i /dev/sda1
+[hong@rhel10 ~]$ df -h -i /dev/sda1
 ```
 
 ### Links - Hard Link
@@ -1018,7 +1034,7 @@ Filesystem     Inodes IUsed IFree IUse% Mounted on
   - A hard link cannot span multiple filesystems.
 
 ```
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 1 hong hong      0 Jan  5 21:35 hello.txt
@@ -1026,8 +1042,8 @@ drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # Create another hard link to hello.txt file
-[hong@rhel9 ~]$ ln hello.txt hello2.txt
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ ln hello.txt hello2.txt
+[hong@rhel10 ~]$ ll
 total 144
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 2 hong hong      0 Jan  5 21:35 hello2.txt
@@ -1038,8 +1054,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 # When changes are made to `hello.txt`,
 # `hello2.txt` reflects those changes.
 # Note the file size of both files.
-[hong@rhel9 ~]$ echo 'world' > hello.txt
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ echo 'world' > hello.txt
+[hong@rhel10 ~]$ ll
 total 152
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 2 hong hong      6 Jan  5 22:10 hello2.txt
@@ -1049,8 +1065,8 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 
 # There is still one link, `rm hello2.txt` will not
 # remove `hello.txt`
-[hong@rhel9 ~]$ rm hello2.txt
-[hong@rhel9 ~]$ ll
+[hong@rhel10 ~]$ rm hello2.txt
+[hong@rhel10 ~]$ ll
 total 148
 drwxr-xr-x. 8 hong hong     78 Jan  5 21:49 cpsy204
 -rw-r--r--. 1 hong hong      6 Jan  5 22:10 hello.txt
@@ -1082,14 +1098,14 @@ drwxr-xr-x. 2 hong hong    170 Jan  3 22:28 scripts
 - Use `nmcli connection show` to view all connections.
 
 ```
-[hong@rhel9 ~]$ ip link
+[hong@rhel10 ~]$ ip link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
     link/ether 00:50:56:a7:9d:fe brd ff:ff:ff:ff:ff:ff
     altname enp2s1
 
-[hong@rhel9 ~]$ nmcli connection show
+[hong@rhel10 ~]$ nmcli connection show
 NAME        UUID                                  TYPE      DEVICE
 ens33       c6703973-ca0d-3c8c-a556-a4a561ad970d  ethernet  ens33
 lo          672c2a61-2927-487b-92b6-2e561e7499fd  loopback  lo
@@ -1100,7 +1116,7 @@ lo          672c2a61-2927-487b-92b6-2e561e7499fd  loopback  lo
 - The `ip addr` or `ip a` command gives you more information about your interfaces, such as IPv4 and IPv6 Addressing, the state of the interface, and whether it was manually or dynamically configured.
 
 ```
-[hong@rhel9 ~]$ ip a
+[hong@rhel10 ~]$ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -1141,6 +1157,6 @@ $ sudo nmcli connection up "Wired connection 1"
 
 ## Resources:
 
-[RHEL 9 System Administration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9#System%20Administration)
+[RHEL 10 System Administration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10#System%20administration)
 
 [Linux Commands Cheat Sheet](https://developers.redhat.com/cheat-sheets/linux-commands-cheat-sheet)
