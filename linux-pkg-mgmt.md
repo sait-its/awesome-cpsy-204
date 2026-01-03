@@ -39,6 +39,22 @@ https://www.linode.com/docs/guides/linux-package-management-overview/
 
 DNF vs. YUM - Learn the Differences: https://phoenixnap.com/kb/dnf-vs-yum
 
-Add EPEL to Red Hat: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+Getting started with EPEL: https://docs.fedoraproject.org/en-US/epel/getting-started/
 
-Enable EPEL and EPEL Next in AlmaLinux 9 or Rocky Linux 9: https://linux.how2shout.com/enable-epel-and-epel-next-in-almalinux-or-rocky-linux-9/ 
+[How to use Extra Packages for Enterprise Linux (EPEL)?](https://access.redhat.com/solutions/3358)
+
+Installing EPEL and RPM Fusion on AlmaLinux 10 or Rocky Linux 10: https://wiki.almalinux.org/documentation/epel-and-rpmfusion.html
+
+#### Debian/Ubuntu Package Management
+
+APT: https://en.wikipedia.org/wiki/APT_(software)
+
+[Install and manage packages using `apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/)
+
+[Using APT to Manage Packages in Debian and Ubuntu](https://www.linode.com/docs/guides/apt-package-manager/)
+
+[[Repositories](https://help.ubuntu.com/community/Repositories)/[Ubuntu](https://help.ubuntu.com/community/Repositories/Ubuntu)]
+
+#### Arch Linux Package Management
+
+[pacman](https://wiki.archlinux.org/title/Pacman)
