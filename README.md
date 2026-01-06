@@ -4,6 +4,8 @@
 
 ### [Introduction to Linux Administration](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-unit-02.md)
 
+### [Linux Daemon, Service and `systemd`](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-unit-04.md)
+
 ### [Linux Package Management](./linux-pkg-mgmt.md)
 
 ### [SSH Introduction](https://github.com/sait-lab/devops/blob/main/ssh.md)
