@@ -1,5 +1,9 @@
 ### CPSY 204 - Server Fundamentals
 
+### [Slides](https://sait-its.github.io/cpsy-204/)
+
+---
+
 ### [Client/Server Model](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-cs-model.md)
 
 ### [Introduction to Linux](./intro-to-linux.md)
@@ -7,6 +11,14 @@
 ### [Introduction to Linux Administration](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-linux-admin-intro.md)
 
 ### [Linux Daemon, Service and `systemd`](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-daemon-svc-systemd.md)
+
+#### [DHCP - 🚧 Work in Progress 🚧](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-dhcp.md)
+
+#### [NFS and Samba in Linux - 🚧 Work in Progress 🚧](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-nfs-samba.md)
+
+#### [Configuring Linux DNS - 🚧 Work in Progress 🚧](https://sait-its.github.io/viewer.html?file=cpsy-204%2Fcpsy-204-dns-linux.md)
+
+---
 
 ### [Linux Package Management](./linux-pkg-mgmt.md)
 
